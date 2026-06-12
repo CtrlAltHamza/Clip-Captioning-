@@ -1,3 +1,5 @@
+import './globals.css';
+
 export const metadata = {
   title: 'CLIP-Guided Image Captioning',
   description: 'Interactive web application for the CLIP Captioning project.',
