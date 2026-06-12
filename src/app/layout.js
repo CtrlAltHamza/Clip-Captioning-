@@ -8,6 +8,7 @@ function Navbar() {
   const navItems = [
     { name: 'Home', path: '/' },
     { name: 'Demo', path: '/demo' },
+    { name: 'Live Inference', path: '/inference' },
     { name: 'Architecture', path: '/architecture' },
     { name: 'Results', path: '/results' },
     { name: 'Analysis', path: '/analysis' },
