@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+torch
+torchvision
+Pillow
+matplotlib
+python-multipart
+git+https://github.com/openai/CLIP.git
+numpy
+opencv-python-headless
