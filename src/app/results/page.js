@@ -1,99 +1,95 @@
 export default function ResultsPage() {
+  const rows = [
+    { model: 'Baseline (ResNet+GRU)', b1: '0.540', b4: '0.130', met: '0.172', cs: '0.241', badge: 'Baseline', cls: '' },
+    { model: '+ CLIP Encoder', b1: '0.558', b4: '0.142', met: '0.183', cs: '0.259', badge: 'Ablation 1', cls: '' },
+    { model: '+ CLIP + Cross-Attn', b1: '0.577', b4: '0.151', met: '0.194', cs: '0.272', badge: 'Ablation 2', cls: '' },
+    { model: 'Proposed Full Model (λ=0.3)', b1: '0.685', b4: '0.199', met: '0.383', cs: '0.257', badge: 'Ours ✓', cls: 'row-best' },
+    { model: 'Relative Gain', b1: '+26.8%', b4: '+53.4%', met: '+122.7%', cs: '+6.5%', badge: '—', cls: 'row-gain' },
+  ];
+
+  const charts = [
+    { title: 'Ablation Study', src: '/images/charts/ablation.png', border: '#6366f1' },
+    { title: 'λ Hyperparameter Grid Search', src: '/images/charts/lambda.png', border: '#22d3ee' },
+    { title: 'Metric Profile Radar Chart', src: '/images/charts/radar.png', border: '#6366f1' },
+    { title: 'Training Loss Dynamics (30 Epochs)', src: '/images/charts/training.png', border: '#22d3ee' },
+  ];
+
   return (
-    <div className="py-16 px-4 max-w-6xl mx-auto animate-fade">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">Quantitative Results</h1>
-        <p className="text-slate-400 max-w-2xl mx-auto text-lg">
-          Evaluated on the Flickr8k test set (1,091 images). The proposed model achieves state-of-the-art gains over the baseline by explicitly aligning generated captions in the CLIP semantic space.
-        </p>
-      </div>
+    <section className="section">
+      <div className="container">
+        <div className="section-header fade-up">
+          <div className="section-tag">Evaluation</div>
+          <h1 className="section-title">Quantitative Results</h1>
+          <p className="section-sub">
+            Evaluated on the Flickr8k test set (1,091 images, 5 references each). All metrics show consistent improvement over the baseline.
+          </p>
+        </div>
 
-      <div className="card overflow-x-auto mb-16 shadow-[0_10px_40px_rgba(0,0,0,0.5)]">
-        <table className="w-full text-left border-collapse min-w-[700px]">
-          <thead>
-            <tr className="bg-white/5">
-              <th className="p-5 border-b border-white/10 text-slate-300 font-bold uppercase tracking-wider text-xs">Model Configuration</th>
-              <th className="p-5 border-b border-white/10 text-slate-300 font-bold uppercase tracking-wider text-xs">BLEU-1</th>
-              <th className="p-5 border-b border-white/10 text-slate-300 font-bold uppercase tracking-wider text-xs">BLEU-4</th>
-              <th className="p-5 border-b border-white/10 text-slate-300 font-bold uppercase tracking-wider text-xs">METEOR</th>
-              <th className="p-5 border-b border-white/10 text-slate-300 font-bold uppercase tracking-wider text-xs">CLIPScore</th>
-              <th className="p-5 border-b border-white/10 text-slate-300 font-bold uppercase tracking-wider text-xs">Note</th>
-            </tr>
-          </thead>
-          <tbody className="text-sm">
-            <tr className="hover:bg-white/5 transition border-b border-white/5">
-              <td className="p-5 font-medium">Baseline (ResNet+GRU)</td>
-              <td className="p-5 text-slate-400">0.540</td>
-              <td className="p-5 text-slate-400">0.130</td>
-              <td className="p-5 text-slate-400">0.172</td>
-              <td className="p-5 text-slate-400">0.241</td>
-              <td className="p-5"><span className="badge">Baseline</span></td>
-            </tr>
-            <tr className="hover:bg-white/5 transition border-b border-white/5">
-              <td className="p-5 font-medium">+ CLIP Encoder</td>
-              <td className="p-5 text-slate-400">0.558</td>
-              <td className="p-5 text-slate-400">0.142</td>
-              <td className="p-5 text-slate-400">0.183</td>
-              <td className="p-5 text-slate-400">0.259</td>
-              <td className="p-5"><span className="badge">Ablation 1</span></td>
-            </tr>
-            <tr className="hover:bg-white/5 transition border-b border-white/5">
-              <td className="p-5 font-medium">+ CLIP + Cross-Attn</td>
-              <td className="p-5 text-slate-400">0.577</td>
-              <td className="p-5 text-slate-400">0.151</td>
-              <td className="p-5 text-slate-400">0.194</td>
-              <td className="p-5 text-slate-400">0.272</td>
-              <td className="p-5"><span className="badge">Ablation 2</span></td>
-            </tr>
-            <tr className="bg-cyan-500/10 border-b border-cyan-500/20 font-bold">
-              <td className="p-5 text-white">Proposed Full Model (λ=0.3)</td>
-              <td className="p-5 text-white">0.685</td>
-              <td className="p-5 text-white">0.199</td>
-              <td className="p-5 text-white">0.383</td>
-              <td className="p-5 text-white">0.257</td>
-              <td className="p-5"><span className="badge text-cyan-400 border-cyan-500/30 bg-cyan-500/10 shadow-[0_0_10px_rgba(6,182,212,0.2)]">Ours</span></td>
-            </tr>
-            <tr className="text-cyan-400 font-bold bg-gradient-to-r from-cyan-500/5 to-transparent">
-              <td className="p-5">Relative Gain</td>
-              <td className="p-5">+26.8%</td>
-              <td className="p-5">+53.4%</td>
-              <td className="p-5">+122.7%</td>
-              <td className="p-5">+6.5%</td>
-              <td className="p-5">—</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        {/* Results Table */}
+        <div className="card fade-up fade-up-d1" style={{padding: 0, overflow: 'hidden', marginBottom: '3rem'}}>
+          <div style={{overflowX: 'auto'}}>
+            <table className="results-table" style={{minWidth: '700px'}}>
+              <thead>
+                <tr>
+                  <th>Model Configuration</th>
+                  <th>BLEU-1</th>
+                  <th>BLEU-4</th>
+                  <th>METEOR</th>
+                  <th>CLIPScore</th>
+                  <th>Note</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((r, i) => (
+                  <tr key={i} className={r.cls}>
+                    <td style={{color: r.cls === 'row-best' ? '#fff' : undefined, fontWeight: r.cls === 'row-best' ? 700 : undefined}}>
+                      {r.model}
+                    </td>
+                    <td>{r.b1}</td>
+                    <td>{r.b4}</td>
+                    <td>{r.met}</td>
+                    <td>{r.cs}</td>
+                    <td>
+                      <span style={{
+                        padding: '0.25rem 0.75rem',
+                        borderRadius: '999px',
+                        fontSize: '0.78rem',
+                        fontWeight: 700,
+                        background: r.cls === 'row-best' ? 'rgba(99,102,241,0.2)' : r.cls === 'row-gain' ? 'rgba(52,211,153,0.1)' : 'rgba(255,255,255,0.05)',
+                        color: r.cls === 'row-best' ? '#a5b4fc' : r.cls === 'row-gain' ? '#34d399' : '#64748b',
+                        border: `1px solid ${r.cls === 'row-best' ? 'rgba(99,102,241,0.3)' : r.cls === 'row-gain' ? 'rgba(52,211,153,0.2)' : 'rgba(255,255,255,0.08)'}`,
+                      }}>
+                        {r.badge}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-      <div className="grid md:grid-cols-2 gap-8 mb-8">
-        <div className="card flex flex-col">
-          <h3 className="text-xl font-bold mb-6 border-l-4 border-indigo-500 pl-4">Ablation Study</h3>
-          <div className="img-container contain-img flex-1 bg-[#1e293b]">
-            <img src="/images/charts/ablation.png" alt="Ablation Chart" />
-          </div>
-        </div>
-        <div className="card flex flex-col">
-          <h3 className="text-xl font-bold mb-6 border-l-4 border-cyan-500 pl-4">λ Grid Search</h3>
-          <div className="img-container contain-img flex-1 bg-[#1e293b]">
-            <img src="/images/charts/lambda.png" alt="Lambda Search" />
-          </div>
-        </div>
-      </div>
-      
-      <div className="grid md:grid-cols-2 gap-8">
-        <div className="card flex flex-col">
-          <h3 className="text-xl font-bold mb-6 border-l-4 border-indigo-500 pl-4">Metric Profile Radar Chart</h3>
-          <div className="img-container contain-img flex-1 bg-[#1e293b]">
-            <img src="/images/charts/radar.png" alt="Radar Chart" />
-          </div>
-        </div>
-        <div className="card flex flex-col">
-          <h3 className="text-xl font-bold mb-6 border-l-4 border-cyan-500 pl-4">Training Loss Dynamics</h3>
-          <div className="img-container contain-img flex-1 bg-[#1e293b]">
-            <img src="/images/charts/training.png" alt="Training Curves" />
-          </div>
+        {/* Charts Grid */}
+        <div className="chart-grid fade-up fade-up-d2">
+          {charts.map((ch, i) => (
+            <div key={i} className="card" style={{padding: '1.75rem'}}>
+              <h3 style={{
+                fontSize: '1rem',
+                fontWeight: 700,
+                color: '#e2e8f0',
+                marginBottom: '1.25rem',
+                paddingLeft: '0.9rem',
+                borderLeft: `4px solid ${ch.border}`,
+              }}>
+                {ch.title}
+              </h3>
+              <div className="img-box contain-mode img-box-4-3" style={{background: '#0a1628'}}>
+                <img src={ch.src} alt={ch.title} />
+              </div>
+            </div>
+          ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

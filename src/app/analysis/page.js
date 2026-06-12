@@ -2,59 +2,72 @@ export default function AnalysisPage() {
   const gaps = [
     {
       title: 'Spatial Reasoning',
-      issue: '34% failure on spatial relations (left/right/behind).',
-      fix: 'Incorporate spatial CLIP patch embeddings and relative position encoding.'
+      issue: '34% failure on spatial relations (left / right / behind).',
+      fix: 'Spatial CLIP patch embeddings + relative position encoding in the cross-attention layer.',
     },
     {
       title: 'Rare Object Recognition',
-      issue: '23% incorrect specificity on rare/fine-grained objects.',
-      fix: 'Implement cross-dataset training: Flickr8k + MS-COCO + Conceptual Captions.'
+      issue: '23% incorrect specificity on rare or fine-grained object categories.',
+      fix: 'Cross-dataset training: Flickr8k + MS-COCO + Google Conceptual Captions.',
     },
     {
       title: 'Compositional Language',
       issue: '42% success on complex multi-attribute descriptions.',
-      fix: 'Use a pre-trained LLM (GPT-2 + LoRA) as the transformer decoder.'
+      fix: 'Replace GRU decoder with a GPT-2 + LoRA transformer decoder for richer language generation.',
     },
     {
       title: 'Long Caption Quality',
-      issue: 'Quality degrades for scenes with >4 distinct objects.',
-      fix: 'Integrate hierarchical attention or Faster-RCNN region proposals.'
-    }
+      issue: 'Fluency degrades for scenes containing more than 4 distinct objects.',
+      fix: 'Hierarchical attention mechanism or Faster-RCNN region proposals for object-level grounding.',
+    },
   ];
 
   return (
-    <div className="py-16 px-4 max-w-6xl mx-auto animate-fade">
-      <div className="text-center mb-16">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">Gap Analysis & Future Work</h1>
-        <p className="text-slate-400 max-w-2xl mx-auto text-lg">
-          Identifying the current limitations of our architecture and charting a path forward for subsequent iterations.
-        </p>
-      </div>
+    <section className="section">
+      <div className="container">
+        <div className="section-header fade-up">
+          <div className="section-tag">Limitations</div>
+          <h1 className="section-title">Gap Analysis & Future Work</h1>
+          <p className="section-sub">
+            Identifying the current limitations of our architecture and charting concrete directions for future iterations.
+          </p>
+        </div>
 
-      <div className="grid md:grid-cols-2 gap-8">
-        {gaps.map((g, i) => (
-          <div key={i} className="card p-8 group hover:-translate-y-2">
-            <h3 className="text-2xl font-bold mb-6 text-rose-400 border-l-4 border-rose-500 pl-4 group-hover:text-rose-300 transition-colors">{g.title}</h3>
-            
-            <div className="mb-6 p-4 rounded-xl bg-slate-800/50 border border-slate-700/50">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 block">Observed Issue</span>
-              <p className="text-slate-300">{g.issue}</p>
+        <div className="gap-grid fade-up fade-up-d1">
+          {gaps.map((g, i) => (
+            <div key={i} className="gap-card">
+              <div className="gap-card-title">{g.title}</div>
+              <div className="gap-issue">
+                <div className="gap-sub-label gap-sub-label-issue">Observed Issue</div>
+                <div className="gap-text-issue">{g.issue}</div>
+              </div>
+              <div className="gap-fix">
+                <div className="gap-sub-label gap-sub-label-fix">Proposed Fix</div>
+                <div className="gap-text-fix">{g.fix}</div>
+              </div>
             </div>
-            
-            <div className="p-4 rounded-xl bg-cyan-500/5 border border-cyan-500/20">
-              <span className="text-xs font-bold uppercase tracking-wider text-cyan-500 mb-2 block">Proposed Fix</span>
-              <p className="text-white font-medium">{g.fix}</p>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
+
+        {/* Future roadmap card */}
+        <div className="card fade-up fade-up-d2" style={{
+          marginTop: '2.5rem',
+          background: 'rgba(99,102,241,0.05)',
+          borderColor: 'rgba(99,102,241,0.2)',
+          textAlign: 'center',
+          padding: '3rem 2rem'
+        }}>
+          <div style={{fontSize: '2.5rem', marginBottom: '1rem'}}>🚀</div>
+          <h3 style={{fontSize: '1.6rem', fontWeight: 800, color: '#fff', marginBottom: '0.75rem'}}>
+            Live Inference Backend — Coming Soon
+          </h3>
+          <p style={{fontSize: '0.95rem', color: '#64748b', maxWidth: '600px', margin: '0 auto', lineHeight: '1.75'}}>
+            We are planning to deploy the PyTorch model as a FastAPI microservice, allowing users to
+            upload their own images and receive real-time CLIP-guided captions with attention heatmap
+            visualisation — all from this web application.
+          </p>
+        </div>
       </div>
-      
-      <div className="mt-16 card p-8 text-center bg-indigo-500/5 border-indigo-500/20">
-        <h3 className="text-2xl font-bold mb-4 text-white">Live Inference Backend</h3>
-        <p className="text-slate-400 max-w-2xl mx-auto mb-6">
-          Currently, the web application serves pre-computed test samples. In the future, we plan to deploy the PyTorch model via a Flask/FastAPI backend, enabling users to upload their own images and generate captions in real-time.
-        </p>
-      </div>
-    </div>
+    </section>
   );
 }
